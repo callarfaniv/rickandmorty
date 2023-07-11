@@ -17,7 +17,7 @@ const useInitialState = () => {
     return {
         state,
         login,
-        logout
+        logout,
     }
 }
 

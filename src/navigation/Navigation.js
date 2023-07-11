@@ -12,7 +12,7 @@ export default function Navigation() {
     const Tab = createBottomTabNavigator()
 
     return (
-        <Tab.Navigator>
+        <Tab.Navigator initialRouteName='Rickandmorty'>
             <Tab.Screen
                 name='Account'
                 component={NavigationAccount}

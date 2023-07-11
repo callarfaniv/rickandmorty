@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import CharacterHeader from '../components/CharacterHeader';
+import CharacterHeader from '../components/character/CharacterHeader';
 import { ImageBackground } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CharacterInfo from '../components/CharacterInfo';
-import CharacterEpisodes from '../components/CharacterEpisodes';
+import CharacterInfo from '../components/character/CharacterInfo';
+import CharacterEpisodes from '../components/character/CharacterEpisodes';
 
 export default function Character({ route }) {
 
@@ -14,7 +14,7 @@ export default function Character({ route }) {
     return (
         <SafeAreaView>
             <ImageBackground source={require('../assets/back.jpg')} style={styles.container} resizeMode='stretch' >
-                <CharacterHeader name={character.name} image={character.image} />
+                <CharacterHeader character={character} />
                 <CharacterInfo character={character} />
                 <CharacterEpisodes episode={character.episode} />
             </ImageBackground>

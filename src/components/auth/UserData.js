@@ -1,15 +1,30 @@
 import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { userDetail } from '../../utils/userDb'
 import { Button } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import AppContext from '../../context/AppContext';
+import { useFocusEffect } from '@react-navigation/native';
+import { getFavoriteApi } from '../../api/favorite';
 
 
 export default function UserData(props) {
 
     const { state, logout } = useContext(AppContext)
+    const [numFav, setNumFav] = useState(0)
+
+    const getNumFav = async () => {
+        const response = await getFavoriteApi()
+        setNumFav(response.length)
+
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            getNumFav()
+        }, [])
+    )
 
     return (
         <>
@@ -17,7 +32,10 @@ export default function UserData(props) {
                 source={require('../../assets/portal.gif')}
                 style={styles.image}
             >
-                <FontAwesome5 style={styles.userIcon} name="user-alt" size={90} color="black" />
+                <Image
+                    source={require('../../assets/perfil.jpg')}
+                    style={styles.imageProfile}
+                />
             </ImageBackground>
             <View style={styles.input} >
                 <Text style={styles.text} >User: {state.username}</Text>
@@ -30,6 +48,9 @@ export default function UserData(props) {
             </View>
             <View style={styles.input} >
                 <Text style={styles.text} >Email: {state.email}</Text>
+            </View>
+            <View style={styles.input} >
+                <Text style={styles.text} >Favoritos: {numFav}</Text>
             </View>
             <TouchableOpacity style={styles.button} onPress={logout} >
                 <Text style={styles.buttonText} >Cerrar sesión</Text>
@@ -50,6 +71,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    imageProfile: {
+        width: 150,
+        height: 150,
+        borderRadius: 100,
+        borderWidth: 1,
+        borderColor: 'black'
     },
     userIcon: {
         borderRadius: 80,

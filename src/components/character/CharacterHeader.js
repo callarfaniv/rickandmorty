@@ -1,20 +1,28 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react'
 import { StyleSheet } from 'react-native'
 import { Image } from 'react-native'
 import { ImageBackground } from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons';
+import AppContext from '../../context/AppContext'
+import Favorite from './Favorite'
 
 export default function CharacterHeader(props) {
 
-    const { name, image } = props
+    const { character } = props
+
+    const { state } = useContext(AppContext)
 
     return (
         <>
             <Image
-                source={{ uri: image }}
+                source={{ uri: character.image }}
                 style={styles.image}
             />
-            <Text style={styles.name} >{name}</Text>
+            <View style={styles.horizontal} >
+                <Text style={styles.name} >{character.name} </Text>
+                {state && <Favorite id={character.id} />}
+            </View>
         </>
     )
 }
@@ -24,6 +32,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         paddingTop: 15,
         height: '100%'
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     name: {
         textAlign: 'center',
